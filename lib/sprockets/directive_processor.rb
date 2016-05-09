@@ -65,7 +65,7 @@ module Sprockets
     #     //= require "foo"
     #
     DIRECTIVE_PATTERN = /
-      ^ [\W]* = \s* (\w+.*?) (\*\/)? $
+      ^ \W* = \s* (\w+.*?) (\*\/)? $
     /x
 
     attr_reader :pathname
@@ -126,7 +126,7 @@ module Sprockets
       @directives ||= header.lines.each_with_index.map { |line, index|
         if directive = line[DIRECTIVE_PATTERN, 1]
           name, *args = Shellwords.shellwords(directive)
-          if respond_to?("process_#{name}_directive")
+          if respond_to?("process_#{name}_directive", true)
             [index + 1, name, *args]
           end
         end
